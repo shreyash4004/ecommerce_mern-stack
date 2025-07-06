@@ -6,6 +6,7 @@ import productRoutes from './routes/product.route.js';
 import { connectDB } from './lib/db.js';
 import cookieParser from 'cookie-parser';
 import cartRoutes from './routes/cart.route.js';
+import couponRoutes from './routes/coupon.route.js';
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(cookieParser());  // JSON parser first
 app.use("/api/auth", authRoutes);
 app.use("/api/products",productRoutes);
 app.use("/api/cart",cartRoutes);
+app.use("/api/coupons",couponRoutes);
 
 connectDB().then(() => {
   app.listen(PORT, () => {

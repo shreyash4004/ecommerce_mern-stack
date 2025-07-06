@@ -23,14 +23,14 @@ const storeRefreshToken=async(userId,refreshToken)=>{
 //signup
 export const signup = async (req, res) => {
   try {
-    const { email, password, name } = req.body;
+    const { email, password, name ,role} = req.body;
     const userExist = await User.findOne({ email });
 
     if (userExist) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    const user = await User.create({ name, email, password });
+    const user = await User.create({ name, email, password,role });
 
     // Authenticate before sending response
     const { accessToken, refreshToken } = generateTokens(user._id);

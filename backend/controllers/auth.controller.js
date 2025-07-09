@@ -7,7 +7,6 @@ const generateTokens=(userId)=>{
   expiresIn:"15m",
  });
  const refreshToken=jwt.sign({userId},process.env.REFRESH_TOKEN_SECRET,{expiresIn:"7d",
-
  })
   return {accessToken, refreshToken};
  }
@@ -123,3 +122,13 @@ catch(error){
   res.json({message: error.message });
 }
 }
+
+
+//profile
+export const getProfile = async (req, res) => {
+	try {
+		res.json(req.user);
+	} catch (error) {
+		res.status(500).json({ message: "Server error", error: error.message });
+	}
+};

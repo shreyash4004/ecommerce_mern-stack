@@ -8,7 +8,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useUserStore } from "./store/useUserStore";
 import { useEffect } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
-
+import AdminPage from "./pages/AdminPage";
 function App() {
   const {user,checkAuth,checkingAuth}=useUserStore();
   useEffect(()=>{
@@ -30,12 +30,15 @@ checkAuth();
         <Routes>
           <Route path="/" element={<HomePage></HomePage>}> </Route>
           <Route path="/signup" element={!user ?<SignUpPage/> :<Navigate to={'/'}/>}> </Route>
-          <Route path="/login" element={!user ? <LoginPage/> : <Navigate to={'/'}/>}> </Route>
+          <Route path='/login' element={!user ? <LoginPage /> : <Navigate to='/' />} />
+          <Route
+						path='/secret-dashboard'
+						element={user?.role === "admin" ? <AdminPage /> : <Navigate to='/login' />}
+					/>
         </Routes>
       </div>
       <Toaster></Toaster>
     </div>
   )
 }
-
 export default App

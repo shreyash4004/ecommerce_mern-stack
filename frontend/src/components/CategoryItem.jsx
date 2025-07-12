@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-
 const CategoryItem = ({ category }) => {
 	return (
 		<div className="relative h-96 w-full rounded-2xl overflow-hidden group shadow-xl transition-shadow duration-500 hover:shadow-2xl">

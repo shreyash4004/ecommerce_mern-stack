@@ -30,6 +30,19 @@ export const useProductStore = create((set, get) => ({
             set({ error: "failed to fetch products", loading: false })
         }
     },
+    fetchProductsByCategory:async(category)=>{
+        set({loading:true});
+        try {
+            const response=await axios.get(`/products/category/${category}`);
+            set({products:response.data.products})
+             // toast.success("Products fetched by category successfully!");
+            set({ loading: false });
+        
+        } catch (error) {
+            toast.error(error.response.data.error || "Failed to fetch products by category");
+        }
+    },
+
     toggleFeaturedProduct: async (productId) => {
         set({ loading: true });
         try {

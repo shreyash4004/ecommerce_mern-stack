@@ -2,15 +2,15 @@ import Product from "../models/product.model.js"
 import {redis} from "../lib/redis.js"
 import cloudinary from "../lib/cloudinary.js";
 
-export const getAllProducts= async(req,res,next)=>{
-    try{
-        const products=await Product.find({}); //find all products
-        res.json({products})
-    }
-    catch(error){
-        res.status(5005).json({message:error.message});
-    }
-}
+export const getAllProducts = async (req, res) => {
+	try {
+		const products = await Product.find({}); // find all products
+		res.json({ products });
+	} catch (error) {
+		console.log("Error in getAllProducts controller", error.message);
+		res.status(500).json({ message: "Server error", error: error.message });
+	}
+};
 
 export  const getFeaturedProducts=async(req,res,next)=>{
 try{
@@ -97,7 +97,6 @@ try {
     console.log("Error in getRecommendedProducts controller", error.message);
     res.status(500).json({message: "Server error", error: error.message});
 }
-
 }
 export const getProductsByCategory=async(req, res, next) => {
     const {category}=req.params;
@@ -109,8 +108,6 @@ export const getProductsByCategory=async(req, res, next) => {
         res.status(500).json({message: "Server error", error: error.message});
     }
 }
-
-
 export const toggleFeaturedProduct=async(req, res, next) => {
 
     try {

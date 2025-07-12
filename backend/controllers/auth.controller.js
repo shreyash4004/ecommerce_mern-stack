@@ -10,10 +10,21 @@ const generateTokens=(userId)=>{
  })
   return {accessToken, refreshToken};
  }
- const setCookies=(res,accessToken, refreshToken) => {
-  res.cookie("accessToken", accessToken, { httpOnly: true });
-  res.cookie("refreshToken", refreshToken, { httpOnly: true });
- }
+const setCookies = (res, accessToken, refreshToken) => {
+  res.cookie("accessToken", accessToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production", // true in production
+    sameSite: "lax",
+    maxAge: 1000 * 60 * 15, // 15 minutes
+  });
+
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+  });
+};
 const storeRefreshToken=async(userId,refreshToken)=>{
   await redis.set(`refresh_token:${userId}`, refreshToken, {
   ex: 60 * 60 * 24 * 7 // 7 days in seconds
